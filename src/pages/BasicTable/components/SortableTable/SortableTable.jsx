@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+
 import IceContainer from '@icedesign/container';
 import { Table, Icon, Button } from '@icedesign/base';
 
-const generatorData = () => {
-  return Array.from({ length: 5 }).map((item, index) => {
-    return {
-      todo: `待办事项 ${index}`,
-      memo: `备注说明文案 ${index}`,
-      validity: '2017-12-12',
-    };
-  });
-};
 
 export default class SortableTable extends Component {
   static displayName = 'SortableTable';
@@ -22,9 +15,27 @@ export default class SortableTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataSource: generatorData(),
+      dataSource: [],
     };
   }
+
+  componentDidMount() {
+    // 使用 axios 获取数据
+    axios('https://jsonplaceholder.typicode.com/todos').then((response) => {
+      this.setState({
+        dataSource: response.data.map((item, index) => {
+          console.log(item);
+          return {
+            todo: `${item.userId}`,
+            memo: `${item.title}`,
+            validity: `${item.completed}`
+
+          };
+        }),
+      });
+    });
+  }
+
 
   moveUp = (index) => {
     if (index > 0) {
@@ -83,9 +94,9 @@ export default class SortableTable extends Component {
         <IceContainer>
           <Table dataSource={this.state.dataSource} hasBorder={false}>
             <Table.Column width={80} title="顺序" cell={this.renderOrder} />
-            <Table.Column width={280} title="待办事项" dataIndex="todo" />
+            <Table.Column width={280} title="待办人id" dataIndex="todo" />
             <Table.Column width={240} title="备注" dataIndex="memo" />
-            <Table.Column width={180} title="有效时间" dataIndex="validity" />
+            <Table.Column width={180} title="是否完成" dataIndex="validity" />
             <Table.Column
               width={80}
               title="排序"

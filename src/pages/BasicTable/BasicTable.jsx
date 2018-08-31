@@ -21,10 +21,6 @@ export default class BasicTable extends Component {
   render() {
     return (
       <div className="basic-table-page">
-        <SelectableTable />
-
-        <EditableTable />
-
         <SortableTable />
       </div>
     );
