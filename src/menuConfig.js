@@ -134,6 +134,11 @@ const asideMenuConfig = [
     path: '/page18',
     icon: 'home',
   },
+  {
+    name: '\u57CB\u70B9\u6D41\u91CF\u76D1\u63A7',
+    path: '/events',
+    icon: 'message',
+  },
 ];
 
 export { headerMenuConfig, asideMenuConfig };

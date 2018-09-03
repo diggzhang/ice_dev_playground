@@ -26,17 +26,18 @@ import TableDisplay from './pages/TableDisplay';
 import Page17 from './pages/Page17';
 
 import Page18 from './pages/Page18';
+import EventsTrending from './pages/EventsTrending';
 import NotFound from './pages/NotFound';
 
 const routerConfig = [
   {
-    path: '/portlets/base',
-    component: Portlets,
+    path: '/portlets/terms',
+    component: Terms,
     layout: BasicLayout,
   },
   {
-    path: '/dashboard',
-    component: Dashboard,
+    path: '/portlets/base',
+    component: Portlets,
     layout: BasicLayout,
   },
   {
@@ -75,8 +76,8 @@ const routerConfig = [
     layout: BasicLayout,
   },
   {
-    path: '/portlets/terms',
-    component: Terms,
+    path: '/dashboard',
+    component: Dashboard,
     layout: BasicLayout,
   },
   {
@@ -118,6 +119,11 @@ const routerConfig = [
     path: '/page18',
     layout: BasicLayout,
     component: Page18,
+  },
+  {
+    path: '/events',
+    layout: UserLayout,
+    component: EventsTrending,
   },
 ];
 

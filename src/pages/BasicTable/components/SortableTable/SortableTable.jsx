@@ -20,16 +20,13 @@ export default class SortableTable extends Component {
   }
 
   componentDidMount() {
-    // 使用 axios 获取数据
     axios('https://jsonplaceholder.typicode.com/todos').then((response) => {
       this.setState({
-        dataSource: response.data.map((item, index) => {
-          console.log(item);
+        dataSource: response.data.map((item) => {
           return {
             todo: `${item.userId}`,
             memo: `${item.title}`,
             validity: `${item.completed}`
-
           };
         }),
       });

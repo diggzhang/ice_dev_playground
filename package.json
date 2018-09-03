@@ -72,5 +72,10 @@
   "engines": {
     "node": ">=8.0.0"
   },
-  "title": "尝试飞冰"
+  "title": "尝试飞冰",
+  "themeConfig": {
+    "theme": "light",
+    "primaryColor": "red",
+    "secondaryColor": "grey"
+  }
 }
