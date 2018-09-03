@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import axios from 'axios';
 import {
   G2,
@@ -14,24 +14,21 @@ import {
   Shape,
   Facet,
   Util,
-  PathUtil
-} from "bizcharts";
+  PathUtil,
+} from 'bizcharts';
 
 class Custombar extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      data: []
+      data: [],
     };
   }
-
-
 
   componentDidMount() {
     axios('http://localhost:3000/events').then((response) => {
       this.setState({
-        data: response.data
+        data: response.data,
       });
     });
   }
@@ -39,8 +36,8 @@ class Custombar extends React.Component {
   render() {
     const data = this.state.data;
 
-    Shape.registerShape("interval", "smoothInterval", {
-      getShapePoints: function(cfg) {
+    Shape.registerShape('interval', 'smoothInterval', {
+      getShapePoints(cfg) {
         const width = cfg.size;
         const x = cfg.x; // 最小值的点出现高度为0的情况
 
@@ -49,32 +46,32 @@ class Custombar extends React.Component {
         return [
           {
             x: x - width,
-            y: cfg.y0
+            y: cfg.y0,
           },
           {
             x: x - 0.025,
-            y: end / 3
+            y: end / 3,
           },
           {
             x: x - 0.005,
-            y: (end * 6) / 7
+            y: (end * 6) / 7,
           },
           {
             x: x + 0.02,
-            y: end
+            y: end,
           },
           {
             x: x + 0.045,
-            y: (end * 6) / 7
+            y: (end * 6) / 7,
           },
           {
             x: x + 0.065,
-            y: end / 3
+            y: end / 3,
           },
           {
             x: x + width + 0.04,
-            y: cfg.y0
-          }
+            y: cfg.y0,
+          },
         ];
       },
 
@@ -87,9 +84,9 @@ class Custombar extends React.Component {
         const constaint = [
           // 范围
           [0, 0],
-          [1, 1]
+          [1, 1],
         ];
-        Util.each(points, function(point) {
+        Util.each(points, (point) => {
           if (
             !prePoint ||
             !(prePoint.x === point.x && prePoint.y === point.y)
@@ -101,29 +98,29 @@ class Custombar extends React.Component {
         });
         const spline = PathUtil.catmullRomToBezier(data, false, constaint);
         let path =
-          "M" + first.x + " " + first.y + PathUtil.parsePathArray(spline);
+          `M${first.x} ${first.y}${PathUtil.parsePathArray(spline)}`;
         path = PathUtil.pathToAbsolute(path);
         path = this.parsePath(path, false);
-        return container.addShape("path", {
+        return container.addShape('path', {
           attrs: {
-            fill: cfg.color || "#00D9DF",
-            path: path
-          }
+            fill: cfg.color || '#00D9DF',
+            path,
+          },
         });
-      }
+      },
     });
     const COLORS = [
-      "#0088FE",
-      "#00C49F",
-      "#FFBB28",
-      "#FF8441",
-      "#EE3B61",
-      "#FF6590",
-      "#9575DE",
-      "#8EA4F1",
-      "#C6E8D2",
-      "#FFDB91",
-      "#FF9054"
+      '#0088FE',
+      '#00C49F',
+      '#FFBB28',
+      '#FF8441',
+      '#EE3B61',
+      '#FF6590',
+      '#9575DE',
+      '#8EA4F1',
+      '#C6E8D2',
+      '#FFDB91',
+      '#FF9054',
     ];
     return (
       <div>
@@ -144,13 +141,13 @@ class Custombar extends React.Component {
                 custom: true,
                 renderer: (text, item, index) => {
                   return (
-                    '<div style="color:' +
-                    COLORS[index] +
-                    ';font-size:10px;width:45px;position:relative;left:15px;">' +
-                    text +
-                    "</div>"
+                    `<div style="color:${
+                    COLORS[index]
+                    };font-size:10px;width:45px;position:relative;left:15px;">${
+                    text
+                    }</div>`
                   );
-                }
+                },
               }}
             />
             <Axis name="points" visible={false} />
@@ -158,23 +155,23 @@ class Custombar extends React.Component {
               type="interval"
               position="eventKey*points"
               shape="smoothInterval"
-              color={["eventKey", COLORS]}
+              color={['eventKey', COLORS]}
               label={[
-                "points",
+                'points',
                 {
                   custom: true,
                   renderer: val => {
                     // 3 替换成Min
                     const topOffset = val == 3 ? -30 : 0;
                     return (
-                      '<div style="color:#999;font-size:10px;position:relative;left:15px;top:' +
-                      topOffset +
-                      'px">' +
-                      val +
-                      "%</div>"
+                      `<div style="color:#999;font-size:10px;position:relative;left:15px;top:${
+                      topOffset
+                      }px">${
+                      val
+                      }%</div>`
                     );
-                  }
-                }
+                  },
+                },
               ]}
             >
               <Label label="points" />
